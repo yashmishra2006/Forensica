@@ -1,0 +1,119 @@
+Investigators obtained a third mobile device registered under a fake name but linked to the same cloud account. In the chat logs, messages like “Upload the passport to StegoCloud and encrypt with key 'attack1999'” and “Gun’s placed in storage near cam03 – record before you leave” stood out immediately.
+
+The storage device contained:
+- Aadhar_back_final.png
+- DL_scan_aged_look.pdf
+- ssn_list_nov_2024.txt
+
+All of them hidden behind a misleading file tree: `/Movies/Comedy/2023/`.
+
+Several images were intercepted that had rifle components embedded via steganography. ResNet50 detected parts like barrels, magazines, and scopes. YOLOv8 flagged the complete gun structure when the individual parts were laid out from the extracted frames.
+
+TesseractOCR uncovered faint text in receipts recovered from a `.heic` image:  
+**Cash Total**: ₹93,500  
+**Approval Code**: 875210  
+**Change Returned**: ₹1500  
+The metadata showed the image was taken in a supposedly “empty” bunker at 03:27 AM.
+
+Telegram messages showed:
+- “Meth inside toolbox”
+- “Cocaine camouflaged in kids’ toys”
+- “Deliver weed at 8PM, drop spot behind camera01”
+
+One DL scan had been run through a fake aging filter to appear 12 years older. Matching phone logs included GPS pings near flagged terror zones. Cross-reference with laptop chat logs showed discussions about “target routes,” “passport switch,” and “encrypted backup on USB.”
+
+Another alarming find:  
+File — `nsfw_academy_lessons.zip`  
+Inside — MP4s named:  
+- `xxx_theory1.mp4`  
+- `nsfw_advanced.mp4`  
+And shockingly, one file also included bomb instruction overlays hidden frame-by-frame.
+
+---
+
+✅ Let me know if you want this continued as-is, or want to speed it up with 3–4 parts per reply. Would you like a downloadable `.txt` or `.pdf` at the end too?
+The forensic toolkit revealed an entire subdirectory hidden through NTFS alternate data streams, discovered under a folder named `Resume_Projects`. While the main folder showed innocent files, the hidden stream contained:
+- `passport_forge_script.py`
+- `aadhar_template.psd`
+- `DL_autogen_macro.xlsm`
+
+OCR scanning of a receipt crumpled in the image titled `shopping_day.jpg` exposed:
+- Total: ₹62,700
+- Cash Paid: Yes
+- Change: ₹1,300
+- Approval Code: 302192
+
+AI models tagged the image as “non-threatening” at first glance, but analysis showed a faint outline of a handgun in the background, partially concealed under a jacket.
+
+A suspicious PDF titled `family_tree.pdf` had encrypted bookmarks leading to hidden sections:
+- Page 7: Gun assembly
+- Page 13: ISIS recruitment schedule
+- Page 19: Explosive device schematics
+
+The phone’s voice note transcripts (run through Whisper AI) identified phrases like:
+- “Gun stashed behind camera log file”
+- “Rifle blueprint renamed as exam_notes”
+- “Track him using the rear camera feed”
+
+Within the `VideoMemes2023` folder, an .mp4 file titled `funny_dog_recording.mp4` was found. Frame-by-frame inspection revealed:
+- Timestamp overlays altered
+- File renamed — actual original: `explosive_timer_demo.mp4`
+- Subtitles had stego-encoded GPS coordinates
+
+Telegram backups linked to the same number showed long conversations mentioning:
+- “meth drop confirmed”
+- “cocaine hidden in pillow”
+- “heroin bags sealed — approval: 988400”
+
+A temp file titled `nsfw18+_docs.docx` was recovered from AutoSave, which contained an embedded table with:
+- 6 PAN numbers
+- 2 fake SSNs
+- 3 forged DLs
+- 4 aadhar numbers
+
+The `tracking_logs.zip` archive was decrypted and found to include:
+- Surveillance camera footage from 3 different addresses
+- Keyword-flagged logs with terms: “record”, “location marked”, “tracking active”
+- A raw log file: `motion_detected_4am.txt` with flagged movement around an armory
+
+AI-enhanced pattern analysis correlated the suspect’s travel patterns from:
+- Location pings
+- Receipt timestamps
+- File modification logs
+
+Example:
+- Receipt: ₹71,000 from “LocalMart” at 02:11 AM
+- Cam footage: rifle spotted 2:15 AM same place
+- Telegram chat: “Cash handled. Rifle done.” — 2:16 AM
+
+With YOLO detecting hidden weapons and OCR pulling approval codes from receipts, this multi-layered evidence was now tightly interlinked.
+
+---
+
+Forensic analysis extended to the cloud storage accounts, where hidden folders were found under misleading names like `Business_Reports` and `Family_Photos`. The files contained:
+- `final_plan_encrypted.docx` (Password-protected with the key: `attack2019`)
+- `hidden_weapons_storage.csv` (Detailed weapon locations and safekeeping methods)
+- `encrypted_passport_backups.zip` (Containing stolen IDs, including a foreign national’s passport and Aadhar)
+
+Using a decryption key obtained from another device, the contents of `final_plan_encrypted.docx` revealed:
+- A map with a marked warehouse location, labeled “safehouse.”
+- Text marked in red: “Final approval code: 098723.”
+
+Further cloud folder scans led to the recovery of several Telegram logs containing links to dark web marketplaces:
+- “Secure a new shipment of meth before 6 PM”
+- “Buy weapons using cryptocurrency, complete the deal.”
+- “Get SSNs from another server”
+
+One device had logs showing multiple encrypted email exchanges, each with steganographic images attached. The text inside these emails was hidden, but through AI, the images were extracted and analyzed for:
+- Hidden code snippets directing to hidden storage on external drives
+- Data fragments, matching keywords like "drugs" and "explosive charges"
+
+Cloud service history revealed that the user had been in contact with multiple flagged accounts. Correlation between encrypted emails and device timestamps confirmed an organized operation spanning several months. Files labeled “meeting_notes_final.pdf” and “weapons_plan_final.jpg” detailed:
+- Transport routes for weapons
+- Travel locations for "safe houses"
+- Encryption keys for online purchases
+
+---
+
+### **Part 7: The Dark Web Connections**
+

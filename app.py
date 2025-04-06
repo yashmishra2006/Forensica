@@ -11,13 +11,8 @@ import torchvision.transforms as transforms
 from torchvision.models import resnet50, ResNet50_Weights
 from flask import request, jsonify
 from rapidfuzz import fuzz
-<<<<<<< HEAD
-from flask import Flask, render_template, jsonify
-import json
-=======
 import cv2
 from inference_sdk import InferenceHTTPClient
->>>>>>> 741d60ee8c1838b361afc69967cb2696717b5b93
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 
@@ -371,5 +366,7 @@ def search_keywords():
     search_results_cache = results
     return jsonify({"results": results})
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     app.run(debug=True)
+
+print("")
