@@ -107,12 +107,18 @@
       "Encrypted/Hidden"
     ];
 
-    // Define the load_all_data function
+    myChart.onclick = function(evt, activePoints) {
+    if (activePoints.length > 0) {
+        const clickedBar = activePoints[0];
+        const category = myChart.data.labels[clickedBar.index];
+        window.location.href = `/table?category=${encodeURIComponent(category)}`;
+    }
+};
+
     function load_all_data() {
       fetch("/chart-data")
         .then(res => res.json())
         .then(threatData => {
-          // Reorder data based on defined labels
           const values = labels.map(label => threatData[label] || 0);
 
           const data = {

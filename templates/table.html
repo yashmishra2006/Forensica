@@ -11,7 +11,7 @@
 <header>
     <h1>🕵️‍♀️ Forensica</h1>
     <nav>
-    <a href="./"  class="active">Home</a>
+    <a href="./">Home</a>
     <a href="./upload">Upload</a>
     <a href="./search">Search</a>
     <a href="./charts">Analysis</a>
@@ -19,7 +19,11 @@
     </nav>
 </header>
 <main style="max-width: 1200px; margin: 3rem auto; padding: 3rem; background: rgba(0, 32, 16, 0.85); border: 1px solid rgba(0, 255, 136, 0.1); border-radius: 12px; backdrop-filter: blur(10px);">
-
+    {% if request.args.get("category") %}
+    <h2 style="font-size: 1.6rem; color:#00ffcc; text-align: center; margin-bottom: 1rem;">
+    Category: {{ request.args.get("category") }}
+    </h2>
+{% endif %}  
 
     {% if threats_found %}
 
