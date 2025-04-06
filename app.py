@@ -288,6 +288,10 @@ def results():
 def search():
     return render_template("search.html")
 
+@app.route("/correlations")
+def correlation():
+    return render_template("correlations.html")
+
 @app.route('/table')
 def table():
     category = request.args.get('category')

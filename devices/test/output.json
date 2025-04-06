@@ -356,5 +356,218 @@
         "base64_strings": false
       }
     }
+  },
+  {
+    "path": "devices\\test\\WhatsApp Video 2025-04-06 at 11.14.10_c41155dc.mp4",
+    "type": "video",
+    "content": "Detected potential threats: cutlass, knife in frame 0.",
+    "tags": [
+      "cutlass",
+      "knife"
+    ],
+    "sensitive_info": {
+      "flags": [],
+      "detected_entities": {
+        "emails": [],
+        "phones": [],
+        "urls": [],
+        "base64_strings": false
+      }
+    }
+  },
+  {
+    "path": "devices\\test\\WhatsApp Video 2025-04-06 at 11.14.10_c41155dc.mp4",
+    "type": "video",
+    "content": "Detected potential threats: cutlass, knife in frame 25.",
+    "tags": [
+      "cutlass",
+      "knife"
+    ],
+    "sensitive_info": {
+      "flags": [],
+      "detected_entities": {
+        "emails": [],
+        "phones": [],
+        "urls": [],
+        "base64_strings": false
+      }
+    }
+  },
+  {
+    "path": "devices\\test\\WhatsApp Video 2025-04-06 at 11.14.10_c41155dc.mp4",
+    "type": "video",
+    "content": "Detected potential threats: cutlass, knife in frame 50.",
+    "tags": [
+      "cutlass",
+      "knife"
+    ],
+    "sensitive_info": {
+      "flags": [],
+      "detected_entities": {
+        "emails": [],
+        "phones": [],
+        "urls": [],
+        "base64_strings": false
+      }
+    }
+  },
+  {
+    "path": "devices\\test\\WhatsApp Video 2025-04-06 at 11.14.10_c41155dc.mp4",
+    "type": "video",
+    "content": "Detected potential threats: cutlass in frame 75.",
+    "tags": [
+      "cutlass"
+    ],
+    "sensitive_info": {
+      "flags": [],
+      "detected_entities": {
+        "emails": [],
+        "phones": [],
+        "urls": [],
+        "base64_strings": false
+      }
+    }
+  },
+  {
+    "path": "devices\\test\\WhatsApp Video 2025-04-06 at 11.14.10_c41155dc.mp4",
+    "type": "video",
+    "content": "Detected potential threats: cutlass, knife in frame 100.",
+    "tags": [
+      "cutlass",
+      "knife"
+    ],
+    "sensitive_info": {
+      "flags": [],
+      "detected_entities": {
+        "emails": [],
+        "phones": [],
+        "urls": [],
+        "base64_strings": false
+      }
+    }
+  },
+  {
+    "path": "devices\\test\\WhatsApp Video 2025-04-06 at 11.14.10_c41155dc.mp4",
+    "type": "video",
+    "content": "Detected potential threats: cutlass, knife in frame 125.",
+    "tags": [
+      "cutlass",
+      "knife"
+    ],
+    "sensitive_info": {
+      "flags": [],
+      "detected_entities": {
+        "emails": [],
+        "phones": [],
+        "urls": [],
+        "base64_strings": false
+      }
+    }
+  },
+  {
+    "path": "devices\\test\\WhatsApp Video 2025-04-06 at 11.14.10_c41155dc.mp4",
+    "type": "video",
+    "content": "Detected potential threats: cutlass, knife in frame 150.",
+    "tags": [
+      "cutlass",
+      "knife"
+    ],
+    "sensitive_info": {
+      "flags": [],
+      "detected_entities": {
+        "emails": [],
+        "phones": [],
+        "urls": [],
+        "base64_strings": false
+      }
+    }
+  },
+  {
+    "path": "devices\\test\\WhatsApp Video 2025-04-06 at 11.14.10_c41155dc.mp4",
+    "type": "video",
+    "content": "Detected potential threats: cutlass, knife in frame 175.",
+    "tags": [
+      "cutlass",
+      "knife"
+    ],
+    "sensitive_info": {
+      "flags": [],
+      "detected_entities": {
+        "emails": [],
+        "phones": [],
+        "urls": [],
+        "base64_strings": false
+      }
+    }
+  },
+  {
+    "path": "devices\\test\\WhatsApp Video 2025-04-06 at 11.14.10_c41155dc.mp4",
+    "type": "video",
+    "content": "Detected potential threats: cutlass, knife in frame 200.",
+    "tags": [
+      "cutlass",
+      "knife"
+    ],
+    "sensitive_info": {
+      "flags": [],
+      "detected_entities": {
+        "emails": [],
+        "phones": [],
+        "urls": [],
+        "base64_strings": false
+      }
+    }
+  },
+  {
+    "path": "devices\\test\\WhatsApp Video 2025-04-06 at 11.14.10_c41155dc.mp4",
+    "type": "video",
+    "content": "Detected potential threats: cutlass, knife in frame 225.",
+    "tags": [
+      "cutlass",
+      "knife"
+    ],
+    "sensitive_info": {
+      "flags": [],
+      "detected_entities": {
+        "emails": [],
+        "phones": [],
+        "urls": [],
+        "base64_strings": false
+      }
+    }
+  },
+  {
+    "path": "devices\\test\\WhatsApp Video 2025-04-06 at 11.14.10_f7dafd34.mp4",
+    "type": "video",
+    "content": "Detected potential threats: sword in frame 25.",
+    "tags": [
+      "sword"
+    ],
+    "sensitive_info": {
+      "flags": [],
+      "detected_entities": {
+        "emails": [],
+        "phones": [],
+        "urls": [],
+        "base64_strings": false
+      }
+    }
+  },
+  {
+    "path": "devices\\test\\WhatsApp Video 2025-04-06 at 11.14.10_f7dafd34.mp4",
+    "type": "video",
+    "content": "Detected potential threats: sword in frame 75.",
+    "tags": [
+      "sword"
+    ],
+    "sensitive_info": {
+      "flags": [],
+      "detected_entities": {
+        "emails": [],
+        "phones": [],
+        "urls": [],
+        "base64_strings": false
+      }
+    }
   }
 ]
