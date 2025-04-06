@@ -51,6 +51,19 @@ transform = transforms.Compose([
 
 # --- UTILITIES ---
 
+# Somewhere near the top of app.py
+import json
+from flask import render_template
+
+# Define this function so it's available anywhere
+def load_all_data():
+    with open(OUTPUT_PATH, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    
+    threats_found, flagged_entries = scan_threats(data)
+    return flagged_entries  # return only what you need
+
+
 def is_base64(s):
     try:
         if len(s) % 4 == 0 and len(s) > 20:
@@ -221,9 +234,20 @@ def results():
 def search():
     return render_template("search.html")
 
-@app.route("/table")
+@app.route('/table')
 def table():
-    return render_template("table.html")
+    category = request.args.get('category')
+    full_data = load_all_data()
+
+    if category:
+        filtered_data = [item for item in full_data if category in item['threat_class']]
+        threats_found = len(filtered_data) > 0
+    else:
+        filtered_data = []
+        threats_found = False
+
+    return render_template('table.html', data=filtered_data, threats_found=threats_found)
+
 
 @app.route("/search_keywords", methods=["POST"])
 def search_keywords():

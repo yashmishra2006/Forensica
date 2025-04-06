@@ -4,26 +4,26 @@
   <meta charset="UTF-8">
   <title>Keyword Categories Graph</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href={{ url_for('static', filename='css/univ.css') }}>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/univ.css') }}">
   <style>
 
-/* Chart Page Styles */
-#chart-container {
-  padding: 20px;
-  background: rgba(0, 32, 16, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 10px;
-  margin: 30px auto;
-  max-width: 95%vw;
-  border: 1px solid rgba(0, 255, 136, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 255, 136, 0.08);
-}
+    /* Chart Page Styles */
+    #chart-container {
+      padding: 20px;
+      background: rgba(0, 32, 16, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 10px;
+      margin: 30px auto;
+      max-width: 95%vw;
+      border: 1px solid rgba(0, 255, 136, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 255, 136, 0.08);
+    }
 
-canvas#myChart {
-  width: 100%vw;
-  height: 500px;
-}
+    canvas#myChart {
+      width: 100%vw;
+      height: 500px;
+    }
 
     #chart-container {
       margin-top: 30px;
@@ -95,131 +95,122 @@ canvas#myChart {
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-   <script>
-  const labels = [
-    "Financial Fraud",
-    "Identity Theft",
-    "Weapons/Violence",
-    "Drugs/Illegal",
-    "Explicit Content",
-    "Terrorism Keywords",
-    "Surveillance Data",
-    "Encrypted/Hidden"
-  ];
+  <script>
+    const labels = [
+      "Financial Fraud",
+      "Identity Theft",
+      "Weapons/Violence",
+      "Drugs/Illegal",
+      "Explicit Content",
+      "Terrorism Keywords",
+      "Surveillance Data",
+      "Encrypted/Hidden"
+    ];
 
-  const labelLinks = {
-  "Financial Fraud": "./table",
-  "Identity Theft": "./table",
-  "Weapons/Violence": "./table",
-  "Drugs/Illegal": "./table",
-  "Explicit Content": "./table",
-  "Terrorism Keywords": "./table",
-  "Surveillance Data": "./table",
-  "Encrypted/Hidden": "./table"
-};
+    // Define the load_all_data function
+    function load_all_data() {
+      fetch("/chart-data")
+        .then(res => res.json())
+        .then(threatData => {
+          // Reorder data based on defined labels
+          const values = labels.map(label => threatData[label] || 0);
 
-  fetch("/chart-data")
-    .then(res => res.json())
-    .then(threatData => {
-      // Reorder data based on defined labels
-      const values = labels.map(label => threatData[label] || 0);
+          const data = {
+            labels: labels,
+            datasets: [{
+              data: values,
+              backgroundColor: [
+                '#00ffcc', '#00e6b8', '#00ccaa', '#00b39c',
+                '#00998d', '#00807f', '#006670', '#004d61'
+              ],
+              borderColor: '#00ffcc',
+              borderWidth: 1
+            }]
+          };
 
-      const data = {
-        labels: labels,
-        datasets: [{
-          data: values,
-          backgroundColor: [
-            '#00ffcc', '#00e6b8', '#00ccaa', '#00b39c',
-            '#00998d', '#00807f', '#006670', '#004d61'
-          ],
-          borderColor: '#00ffcc',
-          borderWidth: 1
-        }]
-      };
-
-      const config = {
-        type: 'bar',
-        data: data,
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          onClick: (event, elements) => {
-            if (elements.length > 0) {
-              const index = elements[0].index;
-              const label = data.labels[index];
-              const target = labelLinks[label];
-              if (target) {
-                window.open(target, '_blank');
-              }
-            }
-          },
-          scales: {
-            x: {
-              ticks: {
-                color: '#aaffaa',
-                font: {
-                  size: 14,
-                  weight: 'normal'
+          const config = {
+            type: 'bar',
+            data: data,
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              onClick: (event, elements) => {
+                if (elements.length > 0) {
+                  const index = elements[0].index;
+                  const label = data.labels[index];
+                  const target = `./table?category=${encodeURIComponent(label)}`;
+                  window.open(target, '_blank');
                 }
               },
-              grid: {
-                color: 'rgba(0, 255, 136, 0.08)'
-              }
-            },
-            y: {
-              beginAtZero: true,
-              ticks: {
-                color: '#aaffaa',
-                font: {
-                  size: 18
+              scales: {
+                x: {
+                  ticks: {
+                    color: '#aaffaa',
+                    font: {
+                      size: 14,
+                      weight: 'normal'
+                    }
+                  },
+                  grid: {
+                    color: 'rgba(0, 255, 136, 0.08)'
+                  }
+                },
+                y: {
+                  beginAtZero: true,
+                  ticks: {
+                    color: '#aaffaa',
+                    font: {
+                      size: 18
+                    }
+                  },
+                  title: {
+                    display: true,
+                    text: 'Keyword Frequency',
+                    color: '#00ffcc',
+                    font: {
+                      size: 20,
+                      weight: 'bold'
+                    }
+                  },
+                  grid: {
+                    color: 'rgba(0, 255, 136, 0.08)'
+                  }
                 }
               },
-              title: {
-                display: true,
-                text: 'Keyword Frequency',
-                color: '#00ffcc',
-                font: {
-                  size: 20,
-                  weight: 'bold'
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  backgroundColor: '#003322',
+                  titleColor: '#00ffcc',
+                  bodyColor: '#aaffaa',
+                  titleFont: { size: 18 },
+                  bodyFont: { size: 17 },
+                  callbacks: {
+                    label: context => `${context.label}: ${context.raw}`
+                  }
                 }
               },
-              grid: {
-                color: 'rgba(0, 255, 136, 0.08)'
+              animation: {
+                duration: 600,
+                easing: 'easeOutCubic'
+              },
+              hover: {
+                mode: 'nearest',
+                intersect: true
               }
             }
-          },
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              backgroundColor: '#003322',
-              titleColor: '#00ffcc',
-              bodyColor: '#aaffaa',
-              titleFont: { size: 18 },
-              bodyFont: { size: 17 },
-              callbacks: {
-                label: context => `${context.label}: ${context.raw}`
-              }
-            }
-          },
-          animation: {
-            duration: 600,
-            easing: 'easeOutCubic'
-          },
-          hover: {
-            mode: 'nearest',
-            intersect: true
-          }
-        }
-      };
+          };
 
-      const ctx = document.getElementById('myChart').getContext('2d');
-      new Chart(ctx, config);
-    })
-    .catch(err => {
-      console.error("Error fetching chart data:", err);
-    });
+          const ctx = document.getElementById('myChart').getContext('2d');
+          new Chart(ctx, config);
+        })
+        .catch(err => {
+          console.error("Error fetching chart data:", err);
+        });
+    }
 
+    // Load the chart data when the page is ready
+    document.addEventListener('DOMContentLoaded', load_all_data);
   </script>
 </body>
 </html>
