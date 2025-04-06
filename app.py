@@ -11,9 +11,15 @@ import torchvision.transforms as transforms
 from torchvision.models import resnet50, ResNet50_Weights
 from flask import request, jsonify
 from rapidfuzz import fuzz
+<<<<<<< HEAD
 from flask import Flask, render_template, jsonify
 import json
+=======
+import cv2
+from inference_sdk import InferenceHTTPClient
+>>>>>>> 741d60ee8c1838b361afc69967cb2696717b5b93
 
+pytesseract.pytesseract.tesseract_cmd = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 
 # --- CONFIG ---
 DEVICE_NAME = "test"
@@ -33,12 +39,10 @@ THREAT_CATEGORIES = {
 
 # --- INIT ---
 app = Flask(__name__)
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 model = resnet50(weights=ResNet50_Weights.DEFAULT)
 model.eval()
 
 search_results_cache = []
-flagged_entries = []
 
 LABELS = []
 with open("imagenet_classes.txt", "r") as f:
@@ -49,7 +53,12 @@ transform = transforms.Compose([
     transforms.ToTensor(),
 ])
 
-# --- UTILITIES ---
+# Roboflow client setup
+CLIENT = InferenceHTTPClient(
+    api_url="https://detect.roboflow.com",
+    api_key="hY9qOmC03Dpg4JNVNeOp"
+)
+MODEL_ID = "weapon-jmeyk/1"
 
 def is_base64(s):
     try:
@@ -110,8 +119,15 @@ def analyze_file(path):
         entry["type"] = "pdf"
         try:
             doc = fitz.open(path)
-            text = "\n".join([page.get_text() for page in doc])
-            entry["content"] = text
+            text = ""
+            for page in doc:
+                page_text = page.get_text()
+                if not page_text.strip():
+                    pix = page.get_pixmap()
+                    img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+                    page_text = pytesseract.image_to_string(img)
+                text += page_text + "\n"
+            entry["content"] = text.strip()
         except Exception as e:
             entry["content"] = f"Error: {e}"
 
@@ -127,44 +143,104 @@ def analyze_file(path):
     entry["sensitive_info"] = detect_sensitive_data(entry["content"])
     return entry
 
+def analyze_video(video_path, frame_skip=25):
+    results = []
+    cap = cv2.VideoCapture(video_path)
+    frame_id = 0
+
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        if frame_id % frame_skip == 0:
+            frame_name = f"temp_frame_{frame_id}.jpg"
+            cv2.imwrite(frame_name, frame)
+
+            try:
+                result = CLIENT.infer(frame_name, model_id=MODEL_ID)
+
+                if result["predictions"]:
+                    detected_tags = list(set([pred["class"] for pred in result["predictions"]]))
+                    summary = f"Detected potential threats: {', '.join(detected_tags)} in frame {frame_id}."
+
+                    frame_entry = {
+                        "path": video_path,
+                        "type": "video",
+                        "content": summary,
+                        "tags": detected_tags,
+                        "sensitive_info": {
+                            "flags": [],
+                            "detected_entities": {
+                                "emails": [],
+                                "phones": [],
+                                "urls": [],
+                                "base64_strings": False
+                            }
+                        }
+                    }
+                    results.append(frame_entry)
+
+            except Exception as e:
+                print(f"Error in frame {frame_id}: {e}")
+
+            os.remove(frame_name)
+
+        frame_id += 1
+
+    cap.release()
+    return results
+
 def scan_directory(device_name):
     directory = os.path.join("devices", device_name)
     results = []
+
     for root, _, files in os.walk(directory):
         for file in files:
             if file == "output.json":
                 continue
             full_path = os.path.join(root, file)
-            results.append(analyze_file(full_path))
+
+            if file.lower().endswith(('.mp4', '.avi', '.mov', '.mkv')):
+                print(f"[Video] Analyzing: {file}")
+                results.extend(analyze_video(full_path))
+            else:
+                results.append(analyze_file(full_path))
+
     return results
 
 def scan_threats(data):
     threats_found = False
+    flagged = []
 
     for entry in data:
         content = entry.get('content', '').lower()
-        tags = " ".join(entry.get('tags', [])).lower()  # <-- Include tags
-        combined_text = f"{content} {tags}"  # <-- Combine content + tags
+        tags = " ".join(entry.get('tags', [])).lower()
+        combined_text = f"{content} {tags}"
 
         matched_categories = []
 
         for category, keywords in THREAT_CATEGORIES.items():
             for keyword in keywords:
-                if re.search(rf"\b{re.escape(keyword)}\b", combined_text):  # <-- Scan combined text
+                if re.search(rf"\b{re.escape(keyword)}\b", combined_text):
                     matched_categories.append(category)
-                    break  # One keyword match is enough per category
+                    break
 
         if matched_categories:
             threats_found = True
             entry['threat_keywords'] = matched_categories
             entry['threat_class'] = matched_categories
-            flagged_entries.append(entry)
+            flagged.append(entry)
 
-    return threats_found, flagged_entries
+    return threats_found, flagged
 
+def load_all_data():
+    with open(OUTPUT_PATH, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    threats_found, flagged_entries = scan_threats(data)
+    return flagged_entries
 
 # --- ROUTES ---
-
 @app.route("/")
 def index():
     print("[✓] Running analysis...")
@@ -184,7 +260,6 @@ def index():
 def about():
     return render_template("about.html")
 
-
 @app.route("/charts")
 def charts():
     return render_template("charts.html")
@@ -197,7 +272,6 @@ def chart_data():
     except Exception as e:
         return jsonify({"error": f"Error reading output.json: {e}"}), 500
 
-    # Reuse scanning function
     _, flagged_entries = scan_threats(data)
 
     category_count = {}
@@ -207,7 +281,6 @@ def chart_data():
 
     return jsonify(category_count)
 
-
 @app.route("/upload")
 def home():
     return render_template("home.html")
@@ -216,10 +289,23 @@ def home():
 def results():
     return render_template("results.html", results=search_results_cache)
 
-
 @app.route("/search")
 def search():
     return render_template("search.html")
+
+@app.route('/table')
+def table():
+    category = request.args.get('category')
+    full_data = load_all_data()
+
+    if category:
+        filtered_data = [item for item in full_data if category in item['threat_class']]
+        threats_found = len(filtered_data) > 0
+    else:
+        filtered_data = []
+        threats_found = False
+
+    return render_template('table.html', data=filtered_data, threats_found=threats_found)
 
 @app.route("/search_keywords", methods=["POST"])
 def search_keywords():
@@ -228,7 +314,6 @@ def search_keywords():
     keyword = data.get("keyword", "").strip().lower()
     file_type_filter = data.get("file_type", "all").lower()
 
-    # 🔒 Prevent empty search
     if not keyword:
         search_results_cache = []
         return jsonify({"results": []})
@@ -286,8 +371,5 @@ def search_keywords():
     search_results_cache = results
     return jsonify({"results": results})
 
-
-
-# --- MAIN ---
 if __name__ == "__main__":
     app.run(debug=True)
