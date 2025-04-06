@@ -299,6 +299,13 @@ def table():
     else:
         filtered_data = []
         threats_found = False
+<<<<<<< HEAD
+
+    print(filtered_data, threats_found)
+
+    return render_template('table.html', data=filtered_data, threats_found=threats_found)
+=======
+>>>>>>> e199935a48e804d2ca49f8f2c74d105dd8996fc9
 
     return render_template('table.html', data=filtered_data, threats_found=threats_found)
 
