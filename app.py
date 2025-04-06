@@ -237,18 +237,18 @@ def search():
 @app.route('/table')
 def table():
     category = request.args.get('category')
-    with open("devices/test/output.json", "r", encoding="utf-8") as f:
-        data = json.load(f)
-
-    filtered_data = []
+    full_data = load_all_data()
 
     if category:
-        for item in data:
-            if category in item.get('threat_class', []):
-                filtered_data.append(item)
-        return render_template('table.html', data=filtered_data, threats_found=bool(filtered_data))
+        filtered_data = [item for item in full_data if category in item['threat_class']]
+        threats_found = len(filtered_data) > 0
     else:
-        return render_template('table.html', data=data, threats_found=bool(data))
+        filtered_data = []
+        threats_found = False
+
+    print(filtered_data, threats_found)
+
+    return render_template('table.html', data=filtered_data, threats_found=threats_found)
 
 
 @app.route("/search_keywords", methods=["POST"])
