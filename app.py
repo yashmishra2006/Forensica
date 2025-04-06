@@ -221,6 +221,10 @@ def results():
 def search():
     return render_template("search.html")
 
+@app.route("/table")
+def table():
+    return render_template("table.html")
+
 @app.route("/search_keywords", methods=["POST"])
 def search_keywords():
     global search_results_cache
