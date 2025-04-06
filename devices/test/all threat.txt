@@ -1,0 +1,80 @@
+=== BEGIN TEST DATASET ===
+
+[Transaction Note]
+User ID 22194 processed a purchase using a bank card at a POS terminal in New Delhi. Approval code: 903838. The cash receipt showed a total of ?12,850. Part paid in cash (?5000), balance on card. Customer requested ?150 in change. Similar transactions occurred on multiple days — patterns suggest financial fraud.
+
+[Email Logs]
+"Hi, please find my scanned passport, PAN card, and DL attached. Need them processed urgently. Also attaching a copy of my aadhar as proof of ID."  
+Another email states: "My SSN was exposed on a leaked site. Someone used it to open a credit line. Help!"
+
+[Forum Screenshot]
+User @dark_ranger posted:  
+"If anything goes wrong, I’ll pull out the knife."  
+"They say he’s got a gun taped under his desk."  
+Saw someone type: "Grenades are stored in box #7. Don’t mess with it."  
+In another thread: "He makes homemade explosives in his garage. Real psycho."
+
+[Chat App - Drug Marketplace]
+“Cocaine bricks are available for 20k each. Clean stuff.”  
+“Got premium weed, 100g packs. Cash only.”  
+“Heroin packages marked as 'tea blend'. Discreet shipping.”  
+“Meth lab photos leaked — looks like he’s cooking the blue stuff like in Breaking Bad.”
+
+[NSFW Telegram Channel]
+“XXX clips dump. High res.”  
+“18+ content only. Click if you’re legal.”  
+“NSFW group invite. Strictly no minors.”  
+“Bro send that XXX zip again. Link expired.”
+
+[Terrorism Watchlist Chat]
+“Bomb instructions PDF available now. Encrypt and share.”  
+“Join our cause. ISIS will prevail.”  
+“Recruitment form attached. Rifle mandatory. Training at undisclosed location.”  
+“Planned attack on political rally. Coordinated through Telegram.”
+
+[Surveillance Data Extracted]
+“Start recording the call now.”  
+“Location pinged near Zone 4 checkpoint.”  
+“The camera on the drone is malfunctioning. Switch to secondary.”  
+“We’ve been tracking his number since last Friday.”  
+“Real-time surveillance active on 4 subjects.”
+
+[Hidden & Encrypted Comm]
+“This file is encrypted using AES-256. Passphrase sent separately.”  
+“Use stego to hide message in the dog image.”  
+“Steganography hides better in audio — try .wav.”  
+“Encrypted ZIP named 'projectX_final' has everything. Don’t open without permission.”
+
+[Combined Threads - Noise + Threats]
+User: "Had a pizza delivered to the warehouse. Cash receipt got wet in the rain lol. Anyway, I paid in cash and the guy didn’t return change."  
+Later that day, same user: "Also, who the hell hides grenades behind cereal boxes??"  
+Post from another user: "My cousin lost his passport AND his DL last week. Nightmare. On top of that, his aadhar wasn’t linking."  
+Discussion: “Tracking the thief via street cameras. He passed location X at 14:53. Audio confirms name drop.”  
+Voice snippet: “He asked for approval code over the phone — weird. Said something about opening a new account using someone else's PAN.”
+
+[Deep Web Leak Dump]
+Filename: `bomb_assembly_manual.pdf`  
+Filename: `aadhar_dump_2023.csv`  
+Filename: `cocaine_price_list.xlsx`  
+Filename: `XXX_mega_folder.zip`  
+Filename: `stego_payload.png`  
+Filename: `gun_specs.docx`
+
+[Intercepted Call]
+Caller: "You have the rifle?"  
+Receiver: "Yeah. It’s in the van with the meth and cash. Parked near Zone 3. Password-protected files are in the glovebox. Use 'delta12' to extract."  
+Caller: "Camera active?"  
+Receiver: "Yeah. Tracking him live from the rooftop surveillance cam."
+
+[Additional Phrases / Minor Repetition for Detection Testing]
+- "SSN fraud is common in phishing scams now."
+- "Total paid in cash. Forgot to ask for change."
+- "Tracking enabled on device 144AB."
+- "Encrypted folder contains explicit 18+ files."
+- "He was armed with a rifle and carrying 200g heroin."
+- "Bomb threat issued via anonymous message board."
+- "Recruited through NSFW site redirect."
+- "Pan card image hidden via steganography in a cat meme."
+- "Surveillance logs show movements consistent with smuggling."
+
+=== END TEST DATASET ===
