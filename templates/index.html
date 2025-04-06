@@ -3,28 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>Threat Detection Report</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/univ.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href={{ url_for('static', filename='css/univ.css') }}>
 </head>
-<body>
+<body style="margin:0; font-family:'Fira Code', monospace; background: radial-gradient(ellipse at top, #001611 0%, #000c0a 100%); color:#aaffaa; padding:0 1rem;">
 
-  <header class="text-center">
-    <h1 class="text-4xl font-bold mb-4">🕵️‍♀️ Forensica</h1>
+  <header>
+    <h1>🕵️‍♀️ Forensica</h1>
     <nav>
-      <a href="./" class="active">Home</a>
+      <a href="./"  class="active">Home</a>
       <a href="./upload">Upload</a>
       <a href="./search">Search</a>
       <a href="./charts">Analysis</a>
       <a href="./about">About</a>
     </nav>
   </header>
+  <main style="max-width: 1200px; margin: 3rem auto; padding: 3rem; background: rgba(0, 32, 16, 0.85); border: 1px solid rgba(0, 255, 136, 0.1); border-radius: 12px; backdrop-filter: blur(10px);">
 
-  <header>
-    <h1>🔍 Threat Detection Dashboard</h1>
-  </header>
+    <h1 style="color:#00ffcc; font-size: 2rem; font-weight: 800; border-left: 5px solid #00ffcc; padding-left: 1rem;">🔍 Threat Detection Dashboard</h1>
 
-  <main>
     {% if threats_found %}
-      <h2>📊 Threat Summary</h2>
+      <h2 style="font-size:1.5rem; color:#00ffcc; margin-top: 2rem;">📊 Threat Summary</h2>
+
       <div class="summary-cards">
         {% set category_counts = {} %}
         {% for item in data %}
@@ -34,18 +34,18 @@
         {% endfor %}
 
         {% for category, count in category_counts.items() %}
-          <div class="result-card">
-            <h3><span>{{ category }}</span>: {{ count }} threat{{ 's' if count > 1 else '' }}</h3>
+          <div style="background-color: rgba(0, 26, 13, 0.9); border-left: 4px solid #00ffcc; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+            <h3 style="color:#e0ffe0; font-size: 1.2rem;"><span style="color:#00ffcc;">{{ category }}</span>: {{ count }} threat{{ 's' if count > 1 else '' }}</h3>
           </div>
         {% endfor %}
       </div>
 
-      <h2>🚨 Flagged Files</h2>
+      <h2 style="font-size:1.5rem; color:#00ffcc; margin-top: 2rem;">🚨 Flagged Files</h2>
       {% for item in data %}
-        <div class="result-card">
-          <h3>📁 File: <span>{{ item.path }}</span></h3>
+        <div style="background-color: rgba(0, 26, 13, 0.9); border-left: 4px solid #00ffcc; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+          <h3 style="font-size: 1.3rem; color:#e0ffe0;">📁 File: <span style="color:#00ffcc;">{{ item.path }}</span></h3>
           <p><strong>📌 Threat Class:</strong> {{ item.threat_class | join(', ') }}</p>
-          <pre>{{ item.content[:500] }}{% if item.content|length > 500 %}...{% endif %}</pre>
+          <pre style="color:#c2ffc2; white-space:pre-wrap; margin-top:1rem;">{{ item.content[:500] }}{% if item.content|length > 500 %}...{% endif %}</pre>
 
           {% set has_flags = item.sensitive_info.flags | length > 0 %}
           {% set has_entities = false %}
@@ -56,9 +56,9 @@
           {% endfor %}
 
           {% if has_flags or has_entities %}
-            <div class="sensitive-info">
-              <h4>⚠️ Sensitive Info Detected</h4>
-              <ul>
+            <div style="background-color:#1b1916; border-left:5px solid #ffa000; padding:10px; margin-top:10px; border-radius:6px;">
+              <h4 style="color:#ffdd88; margin: 0 0 0.5rem;">⚠️ Sensitive Info Detected</h4>
+              <ul style="list-style-type:square; margin-left:20px;">
                 {% for flag in item.sensitive_info.flags %}
                   <li><strong>Flag:</strong> {{ flag }}</li>
                 {% endfor %}
@@ -76,11 +76,10 @@
               </ul>
             </div>
           {% endif %}
-
         </div>
       {% endfor %}
     {% else %}
-      <div class="result-card">
+      <div style="background-color: rgba(0, 26, 13, 0.9); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #00ffcc; color:#c2ffc2;">
         <p>No threats found. All clear! ✅</p>
       </div>
     {% endif %}
