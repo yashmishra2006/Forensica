@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Forensica - Search Keywords</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href={{ url_for('static', filename='css/univ.css') }}>
+  
+</head>
+<body>
+
+  <header>
+    <h1>🕵️‍♀️ Forensica</h1>
+    <nav>
+      <a href="./">Home</a>
+      <a href="./upload">Upload</a>
+      <a href="./search" class="active">Search</a>
+      <a href="./charts">Analysis</a>
+      <a href="./about">About</a>
+    </nav>
+  </header>
+
+  <main class="main-section">
+    <h2 class="heading">🔍 Search Extracted Keywords</h2>
+    <p class="description">Use this tool to search specific terms across all parsed content extracted from uploaded devices. Filter by file types for deeper inspection.</p>
+
+    <div class="mb-6">
+      <input id="searchInput" type="text" placeholder="Type a keyword to search..." class="input-box"/>
+      <p id="resultCount" class="result-counter">0 results found</p>
+    </div>
+
+    <div class="mb-6">
+      <label for="fileType">Filter by File Type:</label>
+      <select id="fileType">
+        <option value="all">All</option>
+        <option value="txt">TXT</option>
+        <option value="docx">DOCX</option>
+        <option value="pdf">PDF</option>
+      </select>
+    </div>
+
+    <div id="keywordResults"></div>
+
+
+    <button id="goToResults" class="results-button">→ See Full Keyword Report</button>
+  </main>
+
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const resultContainer = document.getElementById("keywordResults");
+    const searchInput = document.getElementById("searchInput");
+    const fileTypeSelect = document.getElementById("fileType");
+    const resultCount = document.getElementById("resultCount");
+
+    async function renderKeywords(filter = "", fileTypeFilter = "all") {
+      resultContainer.innerHTML = "";
+      resultCount.textContent = "Searching...";
+
+      const response = await fetch("/search_keywords", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          keyword: filter,
+          file_type: fileTypeFilter
+        })
+      });
+
+      const result = await response.json();
+      const keywordList = result.results || [];
+      let matches = 0;
+
+      keywordList.forEach(item => {
+        const keywordEl = document.createElement("div");
+        keywordEl.className = "keyword-box";
+        keywordEl.innerHTML = `📌 <span class="font-semibold">${item.word}</span> 
+          <span class="ml-2 text-sm text-gray-400">(${item.fileType.toUpperCase()})</span>`;
+        resultContainer.appendChild(keywordEl);
+        matches++;
+      });
+
+      resultCount.textContent = `${matches} result${matches !== 1 ? "s" : ""} found`;
+    }
+
+    searchInput.addEventListener("input", () => {
+      renderKeywords(searchInput.value, fileTypeSelect.value);
+    });
+
+    fileTypeSelect.addEventListener("change", () => {
+      renderKeywords(searchInput.value, fileTypeSelect.value);
+    });
+
+    document.getElementById("goToResults").addEventListener("click", () => {
+      window.location.href = "./results";
+    });
+
+    // Initial call with no filter
+    renderKeywords();
+  });
+
+  </script>
+</body>
+</html>

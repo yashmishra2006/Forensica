@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Threat Detection Report</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/univ.css') }}">
+</head>
+<body>
+
+  <header class="text-center">
+    <h1 class="text-4xl font-bold mb-4">🕵️‍♀️ Forensica</h1>
+    <nav>
+      <a href="./" class="active">Home</a>
+      <a href="./upload">Upload</a>
+      <a href="./search">Search</a>
+      <a href="./charts">Analysis</a>
+      <a href="./about">About</a>
+    </nav>
+  </header>
+
+  <header>
+    <h1>🔍 Threat Detection Dashboard</h1>
+  </header>
+
+  <main>
+    {% if threats_found %}
+      <h2>📊 Threat Summary</h2>
+      <div class="summary-cards">
+        {% set category_counts = {} %}
+        {% for item in data %}
+          {% for threat in item.threat_class %}
+            {% set category_counts = category_counts.update({threat: category_counts.get(threat, 0) + 1}) or category_counts %}
+          {% endfor %}
+        {% endfor %}
+
+        {% for category, count in category_counts.items() %}
+          <div class="result-card">
+            <h3><span>{{ category }}</span>: {{ count }} threat{{ 's' if count > 1 else '' }}</h3>
+          </div>
+        {% endfor %}
+      </div>
+
+      <h2>🚨 Flagged Files</h2>
+      {% for item in data %}
+        <div class="result-card">
+          <h3>📁 File: <span>{{ item.path }}</span></h3>
+          <p><strong>📌 Threat Class:</strong> {{ item.threat_class | join(', ') }}</p>
+          <pre>{{ item.content[:500] }}{% if item.content|length > 500 %}...{% endif %}</pre>
+
+          {% set has_flags = item.sensitive_info.flags | length > 0 %}
+          {% set has_entities = false %}
+          {% for key, val in item.sensitive_info.detected_entities.items() %}
+            {% if val %}
+              {% set has_entities = true %}
+            {% endif %}
+          {% endfor %}
+
+          {% if has_flags or has_entities %}
+            <div class="sensitive-info">
+              <h4>⚠️ Sensitive Info Detected</h4>
+              <ul>
+                {% for flag in item.sensitive_info.flags %}
+                  <li><strong>Flag:</strong> {{ flag }}</li>
+                {% endfor %}
+                {% for key, val in item.sensitive_info.detected_entities.items() %}
+                  {% if val %}
+                    <li><strong>{{ key | capitalize }}:</strong>
+                      {% if val is iterable and val is not string %}
+                        {{ val | join(', ') }}
+                      {% else %}
+                        {{ val }}
+                      {% endif %}
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="result-card">
+        <p>No threats found. All clear! ✅</p>
+      </div>
+    {% endif %}
+  </main>
+
+</body>
+</html>

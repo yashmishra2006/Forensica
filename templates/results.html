@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forensica - Search Keywords</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href={{ url_for('static', filename='css/univ.css') }}>
+</head>
+<body>
+
+  <header>
+    <h1>🕵️‍♀️ Forensica</h1>
+    <nav>
+      <a href="./">Home</a>
+      <a href="./upload">Upload</a>
+      <a href="./search" class="active">Search</a>
+      <a href="./charts">Analysis</a>
+      <a href="./about">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>📄 Extracted Data Results</h2>
+    <p>Here are the summarized findings from the device forensic scan, sorted by relevance, file type, and sensitivity.</p>
+
+  
+    <h2 class="heading">📋 Keyword Search Results</h2>
+
+    {% if results %}
+      <ul class="space-y-4">
+        {% for item in results %}
+          <li class="p-4 bg-gray-800 rounded-md shadow">
+            <p><strong>Keyword:</strong> {{ item.word }}</p>
+            <p><strong>File Type:</strong> {{ item.fileType.upper() }}</p>
+            <p><strong>File Path:</strong> {{ item.filePath }}</p>
+            <p><strong>Preview:</strong> {{ item.preview }}</p>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-red-500 mt-4">⚠️ No results to display. Please search from the <a href="/search" class="text-blue-600 underline">Search Page</a>.</p>
+    {% endif %}
+
+
+  </main>
+</body>
+</html>

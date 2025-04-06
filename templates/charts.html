@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Keyword Categories Graph</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href={{ url_for('static', filename='css/univ.css') }}>
+  <style>
+
+/* Chart Page Styles */
+#chart-container {
+  padding: 20px;
+  background: rgba(0, 32, 16, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 10px;
+  margin: 30px auto;
+  max-width: 1000px;
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 255, 136, 0.08);
+}
+
+canvas#myChart {
+  width: 100%;
+  height: 500px;
+}
+
+    #chart-container {
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+
+    /* Button Styles */
+    button#loadChartBtn {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    button#loadChartBtn:hover {
+      background-color: #0056b3;
+    }
+
+    button#loadChartBtn:active {
+      background-color: #003d7a;
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+      #chart-container {
+        padding: 15px;
+      }
+
+      canvas#myChart {
+        height: 400px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      #chart-container {
+        padding: 10px;
+      }
+
+      button#loadChartBtn {
+        width: 100%;
+        padding: 12px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🕵️‍♀️ Forensica</h1>
+    <nav>
+      <a href="./">Home</a>
+      <a href="./upload">Upload</a>
+      <a href="./search">Search</a>
+      <a href="./charts" class="active">Analysis</a>
+      <a href="./about">About</a>
+    </nav>
+  </header>
+
+  <div id="chart-container">
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <script>
+  const labels = [
+    "Financial Fraud",
+    "Identity Theft",
+    "Weapons/Violence",
+    "Drugs/Illegal",
+    "Explicit Content",
+    "Terrorism Keywords",
+    "Surveillance Data",
+    "Encrypted/Hidden"
+  ];
+
+  const labelLinks = {
+    "Financial Fraud": "fraud.html",
+    "Identity Theft": "identity.html",
+    "Weapons/Violence": "violence.html",
+    "Drugs/Illegal": "drugs.html",
+    "Explicit Content": "explicit.html",
+    "Terrorism Keywords": "terrorism.html",
+    "Surveillance Data": "surveillance.html",
+    "Encrypted/Hidden": "encrypted.html"
+  };
+
+  fetch("/chart-data")
+    .then(res => res.json())
+    .then(threatData => {
+      // Reorder data based on defined labels
+      const values = labels.map(label => threatData[label] || 0);
+
+      const data = {
+        labels: labels,
+        datasets: [{
+          data: values,
+          backgroundColor: [
+            '#00ffcc', '#00e6b8', '#00ccaa', '#00b39c',
+            '#00998d', '#00807f', '#006670', '#004d61'
+          ],
+          borderColor: '#00ffcc',
+          borderWidth: 1
+        }]
+      };
+
+      const config = {
+        type: 'bar',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          onClick: (event, elements) => {
+            if (elements.length > 0) {
+              const index = elements[0].index;
+              const label = data.labels[index];
+              const target = labelLinks[label];
+              if (target) {
+                window.open(target, '_blank');
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: '#aaffaa',
+                font: {
+                  size: 20,
+                  weight: 'bold'
+                }
+              },
+              grid: {
+                color: 'rgba(0, 255, 136, 0.08)'
+              }
+            },
+            y: {
+              beginAtZero: true,
+              ticks: {
+                color: '#aaffaa',
+                font: {
+                  size: 18
+                }
+              },
+              title: {
+                display: true,
+                text: 'Keyword Frequency',
+                color: '#00ffcc',
+                font: {
+                  size: 20,
+                  weight: 'bold'
+                }
+              },
+              grid: {
+                color: 'rgba(0, 255, 136, 0.08)'
+              }
+            }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#003322',
+              titleColor: '#00ffcc',
+              bodyColor: '#aaffaa',
+              titleFont: { size: 18 },
+              bodyFont: { size: 17 },
+              callbacks: {
+                label: context => `${context.label}: ${context.raw}`
+              }
+            }
+          },
+          animation: {
+            duration: 600,
+            easing: 'easeOutCubic'
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          }
+        }
+      };
+
+      const ctx = document.getElementById('myChart').getContext('2d');
+      new Chart(ctx, config);
+    })
+    .catch(err => {
+      console.error("Error fetching chart data:", err);
+    });
+
+  </script>
+</body>
+</html>
